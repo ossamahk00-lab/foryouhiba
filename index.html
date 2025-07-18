@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday hiba</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffe0f0, #fdd6f3);
+      color: #5c3c53;
+      text-align: center;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #startBtn {
+      font-size: 24px;
+      padding: 15px 30px;
+      margin-top: 50px;
+      cursor: pointer;
+      background: #d63384;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(214, 51, 132, 0.6);
+      transition: background 0.3s ease;
+    }
+    #startBtn:hover {
+      background: #b3296e;
+    }
+
+    #countdownSection, #mainContent {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #countdownSection {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #countdown {
+      font-size: 6rem;
+      color: #d63384;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    #message {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #c9184a;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .gallery img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: float 8s infinite ease-in;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-150vh); }
+    }
+  </style>
+</head>
+<body>
+
+<button id="startBtn">Clicki rir bchwiya hna 🎉</button>
+
+<!-- Countdown -->
+<div id="countdownSection">
+  <div id="message">wakha 9lil f79k wlkin tsathli ktr mn haka 💕</div>
+  <div id="countdown">10</div>
+</div>
+
+<!-- Surprise Content -->
+<div id="mainContent">
+  <canvas id="fireworks"></canvas>
+  <h1>🎂 Happy Birthday Hiboucha 🎂</h1>
+  <p>
+    Happy birthday Hiba 🥳 , fhad nhar bghet rir nfkrk bli Rak kt 3ni Liya bzfff 🥰 o 3ziza 3lia bzfff .3rftk rir bsodfa o sd9ti ahssen inssan fhyati , kola nhar m3ak rah ne3ma mn end lah , o mdertch hadchi wakha 9lil f79k bch nbarek Lik wlkin derto bch nwerik chhal nti zwina o dryfa o lah i3mrha dar o mkynch fhalk i swear, o b9ay haka het bik 7ayat zwina o kn tmana lik ayi haja telbtiha f khatrek o inshaellah b'succès o lah ikhali lik walidik o lah ikhalik lia o lwalidik❤️❤️❤️<br />
+    
+    
+  </p>
+
+  <div class="gallery">
+    <img src="image1.jpg" alt="Photo 1" />
+    <img src="image2.jpg" alt="Photo 2" />
+    <img src="image3.jpg" alt="Photo 3" />
+    <!-- Add more photos here -->
+  </div>
+</div>
+
+<!-- Music -->
+<audio id="bgMusic" loop>
+  <source src="birthday-piano.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- Balloons -->
+<script>
+  for (let i = 0; i < 30; i++) {
+    const b = document.createElement("div");
+    b.classList.add("balloon");
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.background = `hsl(${Math.random() * 360}, 70%, 80%)`;
+    b.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(b);
+  }
+</script>
+
+<script>
+  const startBtn = document.getElementById('startBtn');
+  const countdownSection = document.getElementById('countdownSection');
+  const mainContent = document.getElementById('mainContent');
+  const bgMusic = document.getElementById('bgMusic');
+  const countdown = document.getElementById('countdown');
+  let time = 10;
+  let timer;
+
+  startBtn.addEventListener('click', () => {
+    startBtn.style.display = 'none';
+    countdownSection.style.display = 'flex';
+    bgMusic.play().catch(() => {
+      console.log('User interaction required to play audio');
+    });
+
+    timer = setInterval(() => {
+      time--;
+      countdown.textContent = time;
+      if (time <= 0) {
+        clearInterval(timer);
+        countdownSection.style.display = 'none';
+        mainContent.style.display = 'flex';
+        launchFireworks();
+      }
+    }, 1000);
+  });
+
+  // Fireworks code
+  const canvas = document.getElementById("fireworks");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let fireworks = [];
+
+  function createFirework() {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height / 2;
+    for (let i = 0; i < 50; i++) {
+      let angle = (Math.PI * 2 * i) / 50;
+      let speed = Math.random() * 4 + 2;
+      fireworks.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        alpha: 1,
+        color: `hsl(${Math.random() * 360}, 100%, 85%)`
+      });
+    }
+  }
+
+  function animateFireworks() {
+    requestAnimationFrame(animateFireworks);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    fireworks.forEach((f, i) => {
+      f.x += f.vx;
+      f.y += f.vy;
+      f.alpha -= 0.01;
+      ctx.globalAlpha = f.alpha;
+      ctx.fillStyle = f.color;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (f.alpha <= 0) fireworks.splice(i, 1);
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function launchFireworks() {
+    setInterval(createFirework, 800);
+    animateFireworks();
+  }
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
